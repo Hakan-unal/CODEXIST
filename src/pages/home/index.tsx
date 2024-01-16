@@ -44,7 +44,7 @@ const Home = (props: any) => {
     tempArr.push(obj);
     dispatch({
       type: CHANGED,
-      state: { basket: tempArr },
+      state: { basket: tempArr }
     });
     setBasket(tempArr);
   };
