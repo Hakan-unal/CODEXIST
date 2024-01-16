@@ -16,7 +16,7 @@ import { LuFileSearch } from "react-icons/lu";
 const { Paragraph, Text } = Typography;
 
 const Home = (props: any) => {
-  const [books, setBooks] = useState([1, 2, 3, 4, 5, 6, 7]);
+  const [books, setBooks] = useState([1, 2, 3, 4]);
 
   const BookCard = () => {
     return books.map((obj: any) => (

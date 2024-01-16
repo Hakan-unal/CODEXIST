@@ -17,8 +17,9 @@ const Sidebar: React.FC = (...props) => {
       collapsible
       collapsed={collapsed}
       width={200}
-      collapsedWidth={40}
+      collapsedWidth={50}
     >
+      Codexist
             <Divider />
 
       <Badge showZero count={0}>
