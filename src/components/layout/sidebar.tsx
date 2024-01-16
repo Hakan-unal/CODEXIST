@@ -59,7 +59,7 @@ const Sidebar: React.FC = (...props) => {
       </Badge>
       <Divider />
 
-      {<BasketItem />}
+      {BasketItem()}
     </Sider>
   );
 };
