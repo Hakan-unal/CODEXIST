@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Badge, Card, Divider, Typography } from "antd";
+import { Badge, Card, Divider, Typography, Image } from "antd";
 import { CiShoppingCart } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "antd";
@@ -9,15 +9,16 @@ import { CHANGED } from "../../../redux/constants";
 const { Sider } = Layout;
 const Sidebar: React.FC = (...props) => {
   const [basket, setBasket] = useState([]);
-  const {  Text } = Typography;
+  const [total, setTotal] = useState<number>(0);
+
+  const { Text } = Typography;
 
   const dispatch = useDispatch();
   const globalState: any = useSelector((state) => state);
 
-
-  const removeBasket = (index:number) => {
-    const tempArr:any = [...basket];
-    tempArr.splice(index,1)
+  const removeBasket = (index: number) => {
+    const tempArr: any = [...basket];
+    tempArr.splice(index, 1);
     dispatch({
       type: CHANGED,
       state: { basket: tempArr },
@@ -25,21 +26,43 @@ const Sidebar: React.FC = (...props) => {
     setBasket(tempArr);
   };
 
+  const handleTotal=()=>{
+    let tempTotal=0
+    basket.forEach((obj:any)=>{
+      tempTotal+=obj.price
+    })
+    setTotal(tempTotal)
+  }
+
   useEffect(() => {
     if (globalState.codexist) {
       setBasket(globalState.codexist.state.basket);
+      handleTotal()
     }
   }, [globalState]);
+
+  useEffect(() => {
+      handleTotal()
+    
+  }, [basket]);
 
   const BasketItem = () => {
     return basket?.map((obj: any, index: number) => (
       <Card
+      bordered={false}
         key={index}
-        extra={<FaRegTrashAlt onClick={()=>removeBasket(index)} style={{ cursor: "pointer" }} color="red" />}
-        title={<Text type="secondary">{obj.name}</Text>}
-        style={{ padding: 10 }}
+        extra={
+          <FaRegTrashAlt
+            onClick={() => removeBasket(index)}
+            style={{ cursor: "pointer" }}
+            color="red"
+          />
+        }
+        style={{ textAlign: "center" }}
       >
-        {obj.author}
+        <Image preview={false} width={50} src={obj.image} />
+        <Divider />
+        <Text type="success">{obj.price} TL</Text>
       </Card>
     ));
   };
@@ -57,9 +80,11 @@ const Sidebar: React.FC = (...props) => {
       <Badge showZero count={basket.length}>
         <CiShoppingCart size={25} />
       </Badge>
-      <Divider />
 
       {BasketItem()}
+
+      <Divider >Total: {total} TL</Divider>
+
     </Sider>
   );
 };

@@ -63,6 +63,7 @@ const Home = (props: any) => {
     return searched?.map((obj: any, index: number) => (
       <Col key={index} md={12} lg={8} xxl={6}>
         <Card
+        extra={<Text type="success">{obj.price} TL</Text>}
           hoverable
           title={<Text ellipsis>{obj.name}</Text>}
           cover={
