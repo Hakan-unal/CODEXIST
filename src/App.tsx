@@ -16,7 +16,6 @@ const App: React.FC = () => {
 
 
   return (<Layout >
-    <Sidebar />
     <Layout>
 
 
@@ -37,6 +36,7 @@ const App: React.FC = () => {
       </Content>
       
     </Layout>
+    <Sidebar />
 
   </Layout>
 
