@@ -9,39 +9,51 @@ import {
   Divider,
   Input,
 } from "antd";
-import { useState } from "react";
-import test from "../../assets/react.svg";
+import { useEffect, useState } from "react";
 import { LuFileSearch } from "react-icons/lu";
+import { getBooks } from "../../../service"
 
 const { Paragraph, Text } = Typography;
 
 const Home = (props: any) => {
   const [books, setBooks] = useState([1, 2, 3, 4]);
 
+
+  const handleBooks=async()=>{
+    const response =await getBooks()
+    setBooks(response)
+
+  }
+
+
+  useEffect(()=>{
+    handleBooks()
+  },[])
+
+
+
+
   const BookCard = () => {
-    return books.map((obj: any) => (
-      <Col sm={12} md={8} lg={6} xxl={4}>
+    return books.map((obj: any,index:number) => (
+      <Col key={index} sm={12} md={8} lg={6} xxl={4}>
         <Card
           hoverable
-          title="name"
+          title={obj.name}
           cover={
             <Image
               width={"60%"}
               style={{ margin: 50 }}
               preview={false}
-              src={test}
-            ></Image>
+              src={obj.image}
+            />
           }
         >
           <Paragraph>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet
-            placeat quasi ab. Maiores saepe mollitia fuga ipsum molestiae
-            pariatur, totam nam velit corporis, distinctio accusantium ex
-            explicabo voluptatibus harum perspiciatis.
+            {obj.shortDescription}
           </Paragraph>
 
           <div style={{ textAlign: "right" }}>
-            <Text strong>author</Text>
+            <Text strong>{obj.author}</Text>
           </div>
           <Divider />
           <Space size={"large"} direction="horizontal">
