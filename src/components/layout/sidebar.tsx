@@ -18,13 +18,12 @@ const Sidebar: React.FC = (...props) => {
       collapsed={collapsed}
       width={200}
       collapsedWidth={50}
+      style={{ paddingTop: 10 }}
     >
-      Codexist
-            <Divider />
-
       <Badge showZero count={0}>
         <CiShoppingCart size={25} />
       </Badge>
+      <Divider />
     </Sider>
   );
 };

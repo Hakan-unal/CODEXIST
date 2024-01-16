@@ -16,7 +16,7 @@ import { getBooks } from "../../../service"
 const { Paragraph, Text } = Typography;
 
 const Home = (props: any) => {
-  const [books, setBooks] = useState([1, 2, 3, 4]);
+  const [books, setBooks] = useState([]);
 
 
   const handleBooks=async()=>{
@@ -34,15 +34,15 @@ const Home = (props: any) => {
 
 
   const BookCard = () => {
-    return books.map((obj: any,index:number) => (
+    return books?.map((obj: any,index:number) => (
       <Col key={index} sm={12} md={8} lg={6} xxl={4}>
         <Card
           hoverable
-          title={obj.name}
+          title={<Text ellipsis>{obj.name}</Text> }
           cover={
             <Image
-              width={"60%"}
-              style={{ margin: 50 }}
+              width={"50%"}
+              style={{ marginLeft: 70,marginRight: 70 }}
               preview={false}
               src={obj.image}
             />
@@ -70,7 +70,7 @@ const Home = (props: any) => {
 
       <Input size="large" prefix={<LuFileSearch size={20}/>} />
       <Divider/>
-      <Row gutter={[12, 36]}>{BookCard()}</Row>
+      <Row align={"top"} gutter={[24, 36]}>{BookCard()}</Row>
     </Card>
   );
 };
