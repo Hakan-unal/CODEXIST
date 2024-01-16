@@ -4,7 +4,7 @@ import { SmileOutlined } from '@ant-design/icons';
 notification.config({
     duration: 2.5,
     maxCount: 1,
-    placement: "topRight"
+    placement: "topLeft"
 });
 
 export const showNotification = (type: any, title: string, description: string, style: any) => {
