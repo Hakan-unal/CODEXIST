@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Badge, Card, Col, Divider, Row, Typography } from "antd";
+import { Badge, Card, Divider, Typography } from "antd";
 import { CiShoppingCart } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "antd";
@@ -8,9 +8,8 @@ import { CHANGED } from "../../../redux/constants";
 
 const { Sider } = Layout;
 const Sidebar: React.FC = (...props) => {
-  const [collapsed, setCollapsed] = useState(true);
   const [basket, setBasket] = useState([]);
-  const { Paragraph, Text } = Typography;
+  const {  Text } = Typography;
 
   const dispatch = useDispatch();
   const globalState: any = useSelector((state) => state);
