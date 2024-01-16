@@ -13,15 +13,30 @@ import { useEffect, useState } from "react";
 import { LuFileSearch } from "react-icons/lu";
 import { getBooks } from "../../../service";
 import { showNotification } from "../../components/general/notification";
+import { CHANGED } from "../../../redux/constants";
+import { useDispatch, useSelector } from "react-redux";
 
 const { Paragraph, Text } = Typography;
 
 const Home = (props: any) => {
   const [books, setBooks] = useState([]);
+  const [basket, setBasket] = useState([]);
+  const dispatch = useDispatch();
+  const globalState = useSelector((state) => state);
 
   const handleBooks = async () => {
     const response = await getBooks();
     setBooks(response);
+  };
+
+  const addBasket = (obj: any) => {
+    const tempArr:any = [...basket];
+    tempArr.push(obj)
+    dispatch({
+      type: CHANGED,
+      state: { basket: tempArr },
+    });
+    setBasket(tempArr);
   };
 
   useEffect(() => {
@@ -30,7 +45,7 @@ const Home = (props: any) => {
 
   const BookCard = () => {
     return books?.map((obj: any, index: number) => (
-      <Col key={index} sm={12} md={8} lg={6} xxl={4}>
+      <Col key={index}  md={12} lg={8} xxl={6}>
         <Card
           hoverable
           title={<Text ellipsis>{obj.name}</Text>}
@@ -50,7 +65,10 @@ const Home = (props: any) => {
           </div>
           <Divider />
           <Space size={"large"} direction="horizontal">
-            <Button block> Add Shopping </Button>
+            <Button onClick={() => addBasket(obj)} block>
+              {" "}
+              Add Shopping{" "}
+            </Button>
             <Button
               block
               onClick={() =>

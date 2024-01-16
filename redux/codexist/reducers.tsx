@@ -5,7 +5,7 @@ export const codexist = (codexist: any = null, action: any) => {
     case CHANGED:
       codexist = {
         ...codexist,
-        drivers: action.drivers,
+        state: action.state,
       };
       return codexist;
   }
