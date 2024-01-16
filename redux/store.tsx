@@ -6,7 +6,7 @@ import { legacy_createStore as createStore } from "redux";
 const logger = createLogger();
 
 export function configureStore(initialState: any = {}) {
-   const middlewares = [logger];
+   const middlewares:any = [logger];
 
    const store = createStore(
       reducers,
