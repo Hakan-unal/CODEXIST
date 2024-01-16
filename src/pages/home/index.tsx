@@ -13,18 +13,30 @@ import { LuFileSearch } from "react-icons/lu";
 import { getBooks } from "../../../service";
 import { showNotification } from "../../components/general/notification";
 import { CHANGED } from "../../../redux/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const { Paragraph, Text } = Typography;
 
 const Home = (props: any) => {
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState<any>(undefined);
+  const [searched, setSearched] = useState([]);
   const [basket, setBasket] = useState([]);
   const dispatch = useDispatch();
+  const globalState: any = useSelector((state) => state);
 
   const handleBooks = async () => {
     const response = await getBooks();
     setBooks(response);
+    setSearched(response);
+  };
+
+  const handleInput = (event: any) => {
+    const val = event.target.value;
+    const tempArr = books?.filter((obj: any) =>
+      obj.name.toLowerCase().includes(val.toLowerCase(), 0)
+    );
+
+    setSearched(tempArr);
   };
 
   const addBasket = (obj: any) => {
@@ -41,8 +53,14 @@ const Home = (props: any) => {
     handleBooks();
   }, []);
 
+  useEffect(() => {
+    if (globalState.codexist) {
+      setBasket(globalState.codexist.state.basket);
+    }
+  }, [globalState]);
+
   const BookCard = () => {
-    return books?.map((obj: any, index: number) => (
+    return searched?.map((obj: any, index: number) => (
       <Col key={index} md={12} lg={8} xxl={6}>
         <Card
           hoverable
@@ -63,7 +81,7 @@ const Home = (props: any) => {
           </div>
           <Divider />
 
-          <Row gutter={[12,36]}>
+          <Row gutter={[12, 36]}>
             <Col span={12}>
               <Button onClick={() => addBasket(obj)} block>
                 Add Shopping{" "}
@@ -87,7 +105,12 @@ const Home = (props: any) => {
 
   return (
     <Card>
-      <Input size="large" prefix={<LuFileSearch size={20} />} />
+      <Input
+        allowClear
+        onChange={handleInput}
+        size="large"
+        prefix={<LuFileSearch size={20} />}
+      />
       <Divider />
       <Row align={"top"} gutter={[24, 36]}>
         {BookCard()}
