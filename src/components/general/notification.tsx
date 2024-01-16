@@ -3,7 +3,7 @@ import { SmileOutlined } from '@ant-design/icons';
 
 notification.config({
     duration: 2.5,
-    maxCount: 3,
+    maxCount: 1,
     placement: "topRight"
 });
 

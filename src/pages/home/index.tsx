@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { LuFileSearch } from "react-icons/lu";
 import { getBooks } from "../../../service"
+import { showNotification } from "../../components/general/notification";
 
 const { Paragraph, Text } = Typography;
 
@@ -19,10 +20,13 @@ const Home = (props: any) => {
   const [books, setBooks] = useState([]);
 
 
+
+
+
+
   const handleBooks=async()=>{
     const response =await getBooks()
     setBooks(response)
-
   }
 
 
@@ -37,6 +41,7 @@ const Home = (props: any) => {
     return books?.map((obj: any,index:number) => (
       <Col key={index} sm={12} md={8} lg={6} xxl={4}>
         <Card
+        onMouseEnter={()=>showNotification("info",obj.name,obj.description,null)}
           hoverable
           title={<Text ellipsis>{obj.name}</Text> }
           cover={
